@@ -1,36 +1,36 @@
 class Solution {
 public:
     bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces) {
-        int r=pieces.size(),n=arr.size();
         
+        //i will store the index for arr
         int i=0;
-        for(;i<n;){
-            int num=arr[i];
-            
-            //search for this element in the first column of th 2d array
-            int rn=-1;
-            for(int j=0;j<r;j++){
-                if(pieces[j][0]==num){
-                    rn=j;
+        while(i<arr.size()){
+            //find that vector in pieces whose first element is equal
+            //to the first element of arr
+            int flag=0,row;
+            for(int j=0;j<pieces.size();j++){
+                if(pieces[j][0]==arr[i]){
+                    row=j;
+                    flag=1;
                     break;
                 }
             }
-            
-            if(rn==-1)
+            if(!flag)
                 return false;
-            
-            //we have found this element
-            int len=pieces[rn].size();
-            int j=0;
-            while(i<n && j<len && arr[i]==pieces[rn][j]){
-                i++,j++;
+            //we have found a number
+            //we have to traverse this whole set
+
+            int s=pieces[row].size();
+            //we don't have enough elements in the array
+            if(i+s >arr.size())
+                return false;
+
+            for(int j=0;j<pieces[row].size();j++){
+                if(pieces[row][j]!=arr[i])
+                    return false;
+                i++;
             }
-            
-            if(j<len)
-                return false;
         }
-        
         return true;
-        
     }
 };
