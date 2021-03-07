@@ -1,33 +1,31 @@
 class Solution {
 public:
-    //taking a global variable count which will count correctly
-    //even during recursion
-    int count=0;
     
-    void permute(vector<int> &v, int l){
-        int n=v.size();
-        //if reached the last position, then break
-        if(l==n)
-            count++ ;
-        
-        //this i has the indexes
-        for(int i=l;i<n;i++){
-            swap(v[i],v[l]);
-            if(v[l]%(l+1)==0 || (l+1)%v[l]==0)
-                permute(v,l+1);
-            swap(v[i],v[l]);
+    int ans=0;
+    
+    //NOTE : here x basically represents the position !!
+    void calc(vector<int> &vis,int x,int n){
+        if(x>n){
+            ans++;
+            return;
         }
-        
+        for(int i=1;i<=n;i++){
+            if(vis[i]==0 && (i%x==0 || x%i==0)){
+                vis[i]=1;
+                //then you can backtrack for i+1
+                calc(vis,x+1,n);
+                vis[i]=0;
+            }
+        }
     }
     
     int countArrangement(int n) {
-        vector<int> v(n);
-        for(int i=1;i<=n;i++)
-            v[i-1]=i;
         
-        //the second argument that we are passing handles the index part
-        //where we will find the permutation
-        permute(v,0);
-        return count;
+        vector<int> vis(n+1,0);
+        
+        calc(vis,1,n);
+        
+        return ans;
+        
     }
 };
