@@ -1,4 +1,5 @@
-/*Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+/*Given an input string (s) and a pattern (p), implement regular expression
+matching with support for '.' and '*'.
 
 '.' Matches any single character.
 '*' Matches zero or more of the preceding element.
@@ -7,8 +8,8 @@ The matching should cover the entire input string (not partial).
 Note:
 
 s could be empty and contains only lowercase letters a-z.
-p could be empty and contains only lowercase letters a-z, and characters like . or *.
-Example 1:
+p could be empty and contains only lowercase letters a-z, and characters like .
+or *. Example 1:
 
 Input:
 s = "aa"
@@ -21,8 +22,8 @@ Input:
 s = "aa"
 p = "a*"
 Output: true
-Explanation: '*' means zero or more of the precedeng element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
-Example 3:
+Explanation: '*' means zero or more of the precedeng element, 'a'. Therefore, by
+repeating 'a' once, it becomes "aa". Example 3:
 
 Input:
 s = "ab"
@@ -35,8 +36,8 @@ Input:
 s = "aab"
 p = "c*a*b"
 Output: true
-Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore it matches "aab".
-Example 5:
+Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore it
+matches "aab". Example 5:
 
 Input:
 s = "mississippi"
@@ -45,14 +46,13 @@ Output: false*/
 
 class Solution {
 public:
-    bool isMatch(string s, string p) {
-        
-        regex b(p);
-        
-        if(regex_match(s,b))
-            return true;
-        else
-            return false;
-        
-    }
+  bool isMatch(string s, string p) {
+
+    regex b(p);
+
+    if (regex_match(s, b))
+      return true;
+    else
+      return false;
+  }
 };

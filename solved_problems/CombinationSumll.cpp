@@ -1,4 +1,6 @@
-/*Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+/*Given a collection of candidate numbers (candidates) and a target number
+(target), find all unique combinations in candidates where the candidate numbers
+sums to target.
 
 Each number in candidates may only be used once in the combination.
 
@@ -30,41 +32,36 @@ A solution set is:
 
 class Solution {
 public:
-    
-    void find(vector<int> &v,vector<vector<int>>& ans,int sum,int i,vector<int> &r)
-    {
-        if(sum<0)
-            return ;
-        if(sum==0)
-        {
-            ans.push_back(r);
-            return;
-        }
-        
-        while(i<v.size() && sum-v[i]>=0)
-        {
-            r.push_back(v[i]);
-            find(v,ans,sum-v[i],i+1,r);
-            while(i+1<v.size() && v[i]==v[i+1])
-                i++;
-            i++;
-            r.pop_back();
-        }
+  void find(vector<int> &v, vector<vector<int>> &ans, int sum, int i,
+            vector<int> &r) {
+    if (sum < 0)
+      return;
+    if (sum == 0) {
+      ans.push_back(r);
+      return;
     }
-    
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        
-        vector<vector<int>> ans;
-        
-        vector<int> r;
-        
-        sort(candidates.begin(),candidates.end());
-        //candidates.erase(unique(candidates.begin(),candidates.end()),candidates.end());
-        
-        find(candidates,ans,target,0,r);
-        
-        return ans;
-        
-    }
-};
 
+    while (i < v.size() && sum - v[i] >= 0) {
+      r.push_back(v[i]);
+      find(v, ans, sum - v[i], i + 1, r);
+      while (i + 1 < v.size() && v[i] == v[i + 1])
+        i++;
+      i++;
+      r.pop_back();
+    }
+  }
+
+  vector<vector<int>> combinationSum2(vector<int> &candidates, int target) {
+
+    vector<vector<int>> ans;
+
+    vector<int> r;
+
+    sort(candidates.begin(), candidates.end());
+    // candidates.erase(unique(candidates.begin(),candidates.end()),candidates.end());
+
+    find(candidates, ans, target, 0, r);
+
+    return ans;
+  }
+};

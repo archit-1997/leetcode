@@ -1,4 +1,5 @@
-/*Given a linked list, remove the n-th node from the end of list and return its head.
+/*Given a linked list, remove the n-th node from the end of list and return its
+head.
 
 Example:
 
@@ -19,27 +20,24 @@ Given n will always be valid.*/
  */
 class Solution {
 public:
-    ListNode* removeNthFromEnd(ListNode* head, int n) {
-        
-        ListNode *cur=head,*prev=head;
-        
-        while(n-- >0)
-            cur=cur->next;
-        
-        if(cur==NULL)
-            return head->next;//pehla node deleted
-        else
-        {
-            while(cur->next!=NULL)
-            {
-                cur=cur->next;
-                prev=prev->next;
-            }
-        }
-        
-        prev->next=prev->next->next;
-        
-        return head;
-        
+  ListNode *removeNthFromEnd(ListNode *head, int n) {
+
+    ListNode *cur = head, *prev = head;
+
+    while (n-- > 0)
+      cur = cur->next;
+
+    if (cur == NULL)
+      return head->next; // pehla node deleted
+    else {
+      while (cur->next != NULL) {
+        cur = cur->next;
+        prev = prev->next;
+      }
     }
+
+    prev->next = prev->next->next;
+
+    return head;
+  }
 };

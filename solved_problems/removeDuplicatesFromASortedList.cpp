@@ -10,19 +10,19 @@
  */
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* head) {
-        ListNode *rep=head;
-        if(head==NULL || head->next==NULL)
-            return head;
-        
-        while(rep!=NULL){
-            ListNode* tmp=rep;
-            while(tmp->next!=NULL && tmp->val==tmp->next->val)
-                tmp=tmp->next;
-            tmp=tmp->next;
-            rep->next=tmp;
-            rep=rep->next;
-        }
-        return head;
+  ListNode *deleteDuplicates(ListNode *head) {
+    ListNode *rep = head;
+    if (head == NULL || head->next == NULL)
+      return head;
+
+    while (rep != NULL) {
+      ListNode *tmp = rep;
+      while (tmp->next != NULL && tmp->val == tmp->next->val)
+        tmp = tmp->next;
+      tmp = tmp->next;
+      rep->next = tmp;
+      rep = rep->next;
     }
+    return head;
+  }
 };
