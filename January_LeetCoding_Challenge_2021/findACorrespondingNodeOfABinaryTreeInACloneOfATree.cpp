@@ -10,33 +10,34 @@
 
 class Solution {
 public:
-    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+  TreeNode *getTargetCopy(TreeNode *original, TreeNode *cloned,
+                          TreeNode *target) {
 
-        queue<TreeNode*> origin,clone;
-        if(original==target)
-            return cloned;
-        
-        origin.push(original);
-        clone.push(cloned);
+    queue<TreeNode *> origin, clone;
+    if (original == target)
+      return cloned;
 
-        while(!origin.empty()){
-            TreeNode *t==origin.front();
-            TreeNode *ans=clone.front();
-            if(t==target)
-                return ans;
-            origin.pop();
-            clone.pop();
+    origin.push(original);
+    clone.push(cloned);
 
-            if(t->left){
-                origin.push(t->left);
-                clone.push(ans->left);
-            }
+    while (!origin.empty()) {
+      TreeNode *t == origin.front();
+      TreeNode *ans = clone.front();
+      if (t == target)
+        return ans;
+      origin.pop();
+      clone.pop();
 
-            if(t->right){
-                origin.push(t->right);
-                clone.push(ans->right);
-            }
-        }
-        return NULL;
+      if (t->left) {
+        origin.push(t->left);
+        clone.push(ans->left);
+      }
+
+      if (t->right) {
+        origin.push(t->right);
+        clone.push(ans->right);
+      }
     }
+    return NULL;
+  }
 };

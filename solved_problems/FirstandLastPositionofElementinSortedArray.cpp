@@ -1,4 +1,5 @@
-/*Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+/*Given an array of integers nums sorted in ascending order, find the starting
+and ending position of a given target value.
 
 Your algorithm's runtime complexity must be in the order of O(log n).
 
@@ -15,29 +16,24 @@ Output: [-1,-1]  */
 
 class Solution {
 public:
-    vector<int> searchRange(vector<int>& nums, int target) {
-        
-        vector<int> ans;
-        
-        if(binary_search(nums.begin(),nums.end(),target))
-        {
-            int l=lower_bound(nums.begin(),nums.end(),target)-nums.begin();
-            int r=upper_bound(nums.begin(),nums.end(),target)-nums.begin()-1;
-            
-            ans.push_back(l);
-            ans.push_back(r);
-            
-            return ans;
-            
-            
-        }
-        else
-        {
-            ans.push_back(-1);
-            ans.push_back(-1);
-            
-            return ans;
-        }
-        
+  vector<int> searchRange(vector<int> &nums, int target) {
+
+    vector<int> ans;
+
+    if (binary_search(nums.begin(), nums.end(), target)) {
+      int l = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
+      int r = upper_bound(nums.begin(), nums.end(), target) - nums.begin() - 1;
+
+      ans.push_back(l);
+      ans.push_back(r);
+
+      return ans;
+
+    } else {
+      ans.push_back(-1);
+      ans.push_back(-1);
+
+      return ans;
     }
+  }
 };

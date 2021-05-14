@@ -20,11 +20,12 @@ n is a 32-bit signed integer, within the range [−231, 231 − 1]*/
 
 class Solution {
 public:
-    double myPow(double x, int n) {
-        if(n==0) return 1.0;
-        if(n<0){
-            return 1/x*myPow(1/x,-(n+1));//to ensure that -n <INT_MAX
-        }
-        return n%2==0?myPow(x*x,n/2):x*myPow(x*x,(n)/2);
+  double myPow(double x, int n) {
+    if (n == 0)
+      return 1.0;
+    if (n < 0) {
+      return 1 / x * myPow(1 / x, -(n + 1)); // to ensure that -n <INT_MAX
     }
+    return n % 2 == 0 ? myPow(x * x, n / 2) : x * myPow(x * x, (n) / 2);
+  }
 };

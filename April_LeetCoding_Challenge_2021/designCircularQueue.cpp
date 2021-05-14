@@ -1,52 +1,49 @@
 class MyCircularQueue {
 public:
-    deque<int> q;
-    int curSize=0;
-    int size=0;
-    MyCircularQueue(int k) {
-        size=k;
-    }
-    
-    bool enQueue(int value) {
-        if(curSize>=size)
-            return false;
-        curSize++;
-        q.push_back(value);
-        return true;
-        
-    }
-    
-    bool deQueue() {
-        if(curSize<=0)
-            return false;
-        curSize--;
-        q.pop_front();
-        return true;
-    }
-    
-    int Front() {
-        if(curSize<=0)
-            return -1;
-        return q.front();
-    }
-    
-    int Rear() {
-        if(curSize<=0)
-            return -1;
-        return q.back();
-    }
-    
-    bool isEmpty() {
-        if(curSize<=0)
-            return true;
-        return false;
-    }
-    
-    bool isFull() {
-        if(curSize>=size)
-            return true;
-        return false;
-    }
+  deque<int> q;
+  int curSize = 0;
+  int size = 0;
+  MyCircularQueue(int k) { size = k; }
+
+  bool enQueue(int value) {
+    if (curSize >= size)
+      return false;
+    curSize++;
+    q.push_back(value);
+    return true;
+  }
+
+  bool deQueue() {
+    if (curSize <= 0)
+      return false;
+    curSize--;
+    q.pop_front();
+    return true;
+  }
+
+  int Front() {
+    if (curSize <= 0)
+      return -1;
+    return q.front();
+  }
+
+  int Rear() {
+    if (curSize <= 0)
+      return -1;
+    return q.back();
+  }
+
+  bool isEmpty() {
+    if (curSize <= 0)
+      return true;
+    return false;
+  }
+
+  bool isFull() {
+    if (curSize >= size)
+      return true;
+    return false;
+  }
 };
 
 /**
