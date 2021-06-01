@@ -6,13 +6,6 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
-bool compare(pair<int, int> &a, pair<int, int> &b) {
-  if (a.second == b.second)
-    return a.first < b.first;
-  return true;
-}
-
 class Solution {
 
 private:
