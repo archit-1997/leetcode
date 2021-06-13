@@ -1,34 +1,32 @@
 class Solution {
 public:
 
-    void dfs(vector<vector<string>> & graph,vector<string> &ans, string curr){
-        ans.push_back(curr);
-        for(string s : graph[curr])
-            dfs(graph,ans,s);
+    void dfs(unordered_map<string,multiset<string>> &graph,vector<string> &ans, string cur){
+        if(graph.count(cur)){
+            while(!graph[cur].empty())
+            {
+                auto it=graph[cur].begin();
+                string s=*it;
+                graph[cur].erase(it);
+                dfs(graph,ans,s);
+            }
+        }
+        ans.push_back(cur);
     }
 
     vector<string> findItinerary(vector<vector<string>>& tickets) {
+        unordered_map<string,multiset<string>> graph;
+
+        for(vector<string> ticket : tickets){
+            string a = ticket[0];
+            string b = ticket[1];
+            graph[a].insert(b);
+        }
+
         vector<string> ans;
-        set<string> st;
-        for(vector<string> ticket: tickets ){
-            for(string s : ticket)
-                st.insert(s);
-        }
-
-        int n=st.size();
-
-        vector<vector<string>> graph(n);
-
-        for(vector<string> ticket: tickets ){
-            string a=ticket[0],b=ticket[1];
-            graph[a].push_back(b);
-        }
-
-        for(vector<string> ticket : tickets)
-            sort(ticket.begin(),ticket.end());
-
-        dfs(graph,ans,"JFK");
-
+        string cur="JFK";
+        dfs(graph,ans,cur);
+        reverse(ans.begin(),ans.end());
         return ans;
     }
 };
