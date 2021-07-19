@@ -1,46 +1,36 @@
-/*Given a collection of numbers that might contain duplicates, return all
-possible unique permutations.
+#include <bits/stdc++.h>
+using namespace std;
 
-Example:
+void findPermutations(vector<int> &nums,vector<vector<int>> &ans,int index){
+    int n=nums.size();
+    if(index==n){
+        ans.push_back(nums);
+        return;
+    }
 
-Input: [1,1,2]
-Output:
-[
-  [1,1,2],
-  [1,2,1],
-  [2,1,1]
-]
+    set<int> st;
+    for(int i=index;i<n;i++){
+        //if already swapped with this element, then don't swap again at this index
+        if(st.find(nums[i])!=st.end())
+            continue;
+        st.insert(nums[i]);
+        swap(nums[i],nums[index]);
+        findPermutations(nums,ans,index+1);
+        swap(nums[i],nums[index]);
 
-*/
+    }
+
+}
 
 class Solution {
 public:
-  void find(vector<int> &nums, int l, int r, set<vector<int>> &s) {
-    if (l == r) {
-      s.insert(nums);
-      return;
-    } else {
-      for (int i = l; i <= r; i++) {
-        swap(nums[i], nums[l]);
-        find(nums, l + 1, r, s);
-        swap(nums[i], nums[l]);
-      }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+
+        findPermutations(nums,ans,0);
+
+        return ans;
     }
-  }
-
-  vector<vector<int>> permuteUnique(vector<int> &nums) {
-
-    set<vector<int>> s;
-
-    sort(nums.begin(), nums.end());
-
-    find(nums, 0, nums.size() - 1, s);
-
-    vector<vector<int>> ans;
-
-    for (auto it = s.begin(); it != s.end(); ++it)
-      ans.push_back(*it);
-
-    return ans;
-  }
 };
+
