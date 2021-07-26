@@ -20,7 +20,6 @@ public:
         }
 
         vector<vector<long long>> ans;
-        auto it=color.begin();
         long long int start,end;
         long long int sum=0;
         for(auto it=color.begin();it!=color.end();it++){
