@@ -1,44 +1,39 @@
-/*Given an unsorted integer array, find the smallest missing positive integer.
+/**
+ * @author      : archit 
+ * @GitHub      : archit-1997
+ * @email       : architsingh456@gmail.com
+ * @file        : firstMissingPositive.cpp
+ * @created     : Tuesday Jul 27, 2021 15:50:16 IST
+ */
 
-Example 1:
 
-Input: [1,2,0]
-Output: 3
-
-Example 2:
-
-Input: [3,4,-1,1]
-Output: 2
-
-Example 3:
-
-Input: [7,8,9,11,12]
-Output: 1
-
-Note:
-
-Your algorithm should run in O(n) time and uses constant extra space.
-*/
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public:
-  int firstMissingPositive(vector<int> &nums) {
+    int firstMissingPositive(vector<int>& nums) {
+        int n=nums.size();
+        int l=0,r=n-1;
+        while(l<=r){
+            if(nums[l]<=0)
+                swap(nums[l],nums[r--]);
+            else
+                l++;
+        }
+        n=l;
+        for(int i=0;i<n;i++){
+            int val=abs(nums[i]);
+            if(val>0 && val<=n){
+                nums[val-1]=abs(nums[val-1])*-1;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(nums[i]>0)
+                return i+1;
+        }
+        return n+1;
 
-    sort(nums.begin(), nums.end());
-
-    nums.erase(unique(nums.begin(), nums.end()), nums.end());
-
-    int index = 1;
-
-    for (int i = 0; i < nums.size(); i++) {
-      if (nums[i] > 0) {
-        if (nums[i] != index)
-          return index;
-        else
-          index++;
-      }
     }
-
-    return index;
-  }
 };
+
