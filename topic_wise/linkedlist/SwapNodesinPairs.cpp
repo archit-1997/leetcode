@@ -1,36 +1,43 @@
-/*Given a linked list, swap every two adjacent nodes and return its head.
+/**
+ * @author      : archit 
+ * @GitHub      : archit-1997
+ * @email       : architsingh456@gmail.com
+ * @file        : swapNodesInPairs.cpp
+ * @created     : Wednesday Jul 28, 2021 10:42:03 IST
+ */
 
-Example:
 
-Given 1->2->3->4, you should return the list as 2->1->4->3.
-Note:
-
-Your algorithm should use only constant extra space.
-You may not modify the values in the list's nodes, only nodes itself may be
-changed.*/
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public:
-  ListNode *swapPairs(ListNode *head) {
+    ListNode* swapPairs(ListNode* head) {
+        if(head==NULL || head->next==NULL)
+            return head;
 
-    if (!head || !head->next) {
-      return head;
+        ListNode* cur=head,*prev=NULL,*next=NULL,*ans=NULL;
+        while(cur && cur->next){
+            ListNode* tmp=cur;
+            cur=cur->next;
+            next=cur->next;
+            //only if this is the first node
+            if(ans==NULL)
+                ans=cur;
+            cur->next=tmp;
+            if(prev==NULL)
+                prev=cur->next;
+            else{
+                prev->next=cur;
+                prev=cur->next;
+            }
+            cur=next;
+        }
+        if(next==NULL)
+            prev->next=NULL;
+        else 
+            prev->next=next;
+        return ans;
     }
-
-    auto result = head->next;
-
-    auto it = head;
-    ListNode *prev = nullptr;
-    while (it && it->next) {
-      if (prev)
-        prev->next = it->next;
-      prev = it;
-      auto n = it->next;
-      prev->next = n->next;
-      n->next = prev;
-      it = prev->next;
-    }
-
-    return result;
-  }
 };
+
