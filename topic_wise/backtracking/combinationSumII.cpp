@@ -14,20 +14,27 @@ public:
     
     void findCombinations(vector<int> &candidates, int target,int index,vector<int> &tmp,vector<vector<int>> &ans){
         int n=candidates.size();
-        if(target<0)
-            return;
+        
 
         if(target==0){
             ans.push_back(tmp);
             return ;
         }
-        for(int i=index;i<n;i++){
-            if(i==index || candidates[i]!=candidates[i-1]){
-                tmp.push_back(candidates[i]);
-                findCombinations(candidates,target-candidates[i],i+1,tmp,ans);
-                tmp.pop_back();
-            }
-        }
+        
+        if(index==n || target<0)
+            return;
+
+        //go to the next index which has number different from this one
+        int next=index+1;
+        while(next<n && candidates[next]==candidates[index])
+            next++;
+        if(next<n)
+            findCombinations(candidates,target,next,tmp,ans); 
+        //subtract this number and go to the next index
+        tmp.push_back(candidates[index]);
+        findCombinations(candidates,target-candidates[index],index+1,tmp,ans);
+        tmp.pop_back();
+        
     }
 
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
@@ -38,3 +45,4 @@ public:
         return ans;
     }
 };
+
