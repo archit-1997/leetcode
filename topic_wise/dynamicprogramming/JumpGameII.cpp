@@ -1,49 +1,46 @@
-/*Given an array of non-negative integers, you are initially positioned at the
-first index of the array.
+/**
+ * @author      : archit
+ * @GitHub      : archit-1997
+ * @Email       : architsingh456@gmail.com
+ * @file        : jumpGameII.cpp
+ * @created     : Thursday Aug 05, 2021 09:02:52 IST
+ */
 
-Each element in the array represents your maximum jump length at that position.
-
-Your goal is to reach the last index in the minimum number of jumps.
-
-Example:
-
-Input: [2,3,1,1,4]
-Output: 2
-Explanation: The minimum number of jumps to reach the last index is 2.
-    Jump 1 step from index 0 to 1, then 3 steps to the last index.*/
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public:
-  int jump(vector<int> &nums) {
 
-    int n = nums.size();
+    int findMinSteps(vector<int> &nums,vector<int> &dp,int index){
+        int n=nums.size();
+        if(index>=n-1)
+            return 0;
 
-    if (n <= 1)
-      return 0;
+        //if we know the min of this index, then simply return this value
+        if(dp[index]!=10001)
+            return dp[index];
 
-    if (nums[0] == 0)
-      return -1;
+        for(int i=index+1;i<=nums[index]+index;i++){
+            //min steps to reach n-1 from index is 
+            //1+min number of steps from those indices which are reachable via index
+            dp[index]=min(dp[index],1+findMinSteps(nums,dp,i));
+        }
 
-    int rem = nums[0], steps = nums[0], jumps = 1;
+        //return the final answer
+        return dp[index];
 
-    for (int i = 1; i < n; i++) {
-      if (i == n - 1)
-        return jumps;
 
-      rem = max(rem, i + nums[i]);
-
-      steps--;
-
-      if (steps == 0) {
-        jumps++;
-
-        if (i > rem)
-          return -1;
-
-        steps = rem - i;
-      }
     }
 
-    return -1;
-  }
+    int jump(vector<int>& nums) {       
+        int n=nums.size();
+
+        //dp[i]-> min number of steps required to reach n-1 from index i
+        //initialised as 10001 as the max number of steps that will be required is 10001 is every step is 1
+        vector<int> dp(n,10001);
+        //NOTE : initialising to INT_MAX will give integer overflow
+
+        return findMinSteps(nums,dp,0);
+    }
 };
