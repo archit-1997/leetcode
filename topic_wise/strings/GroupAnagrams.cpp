@@ -1,40 +1,30 @@
-/*Given an array of strings, group anagrams together.
+/**
+ * @author      : archit
+ * @GitHub      : archit-1997
+ * @Email       : architsingh456@gmail.com
+ * @file        : groupAnagrams.cpp
+ * @created     : Thursday Aug 05, 2021 15:10:14 IST
+ */
 
-Example:
-
-Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
-Output:
-[
-  ["ate","eat","tea"],
-  ["nat","tan"],
-  ["bat"]
-]
-
-Note:
-
-    All inputs will be in lowercase.
-    The order of your output does not matter.
-
-*/
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public:
-  vector<vector<string>> groupAnagrams(vector<string> &strs) {
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string,vector<string>> map;
+        int n=strs.size();
 
-    unordered_map<string, vector<string>> m;
+        for(int i=0;i<n;i++){
+            string rep=strs[i];
+            sort(rep.begin(),rep.end());
+            map[rep].push_back(strs[i]);
+        }
 
-    for (int i = 0; i < strs.size(); i++) {
-      string s = strs[i];
-      sort(s.begin(), s.end());
+        vector<vector<string>> ans;
+        for(auto it=map.begin();it!=map.end();it++)
+            ans.push_back(it->second);
 
-      m[s].push_back(strs[i]);
+        return ans;
     }
-
-    vector<vector<string>> ans;
-
-    for (auto it = m.begin(); it != m.end(); ++it)
-      ans.push_back(it->second);
-
-    return ans;
-  }
 };
