@@ -19,21 +19,16 @@ public:
     int twoSum6(vector<int> &nums, int target) {
         // write your code here
         sort(nums.begin(),nums.end());
-        set<pair<int,int>> st;
         int n=nums.size();
-        int l=0,r=n-1;
-
         int ans=0;
-        while(l<r){
-            int sum=nums[l]+nums[r];
-            if(sum==target)
-                st.insert({nums[l],nums[r]});
-
-            if(sum<target)
-                l++;
-            else
-                r--;
+        for(int r=n-1;r>=1;r--){
+            int l=r-1;
+            while(l>=0 && nums[l]+nums[r]>target)
+                l--;
+            if(l>=0)
+                ans+=(l+1);
         }
-        return st.size();
+        return ans;
+
     }
 };
