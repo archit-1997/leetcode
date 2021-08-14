@@ -12,34 +12,33 @@ using namespace std;
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
-        unordered_map<int,int> row,col;
         int r=matrix.size(),c=matrix[0].size();
+        bool col0=false;
         for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
+            if(matrix[i][0]==0)
+                col0=true;
+            for(int j=1;j<c;j++){
+                //if this is a zero, mark the head of row and col as 0
                 if(matrix[i][j]==0){
-                    row[i]=1;
-                    col[j]=1;
+                    //head of the row
+                    matrix[i][0]=0;
+                    //head of the col
+                    matrix[0][j]=0;
                 }
             }
         }
 
-        for(int i=0;i<r;i++){
-           for(int j=0;j<c;j++){
-                //if this row has a 0
-                if(row[i]==1){
-                    //make all the elements of this row 0
-                    for(int k=0;k<c;k++)
-                        matrix[i][k]=0;
-                }
-                //if this column also has a 0
-                if(col[j]==1){
-                    //make all the elements of this column 0
-                    for(int k=0;k<r;k++)
-                        matrix[k][j]=0;
-                }
-           }
+        //just need to iterate
+        for(int i=r-1;i>=0;i--){
+            for(int j=c-1;j>=1;j--){
+                if(matrix[i][0]==0 || matrix[0][j]==0)
+                    matrix[i][j]=0;
+            }
+            if(col0)
+                matrix[i][0]=0;
         }
     }
 };
+
 
 
