@@ -1,35 +1,41 @@
-/*Given a 32-bit signed integer, reverse digits of an integer.
+/**
+ * @author      : archit
+ * @GitHub      : archit-1997
+ * @Email       : architsingh456@gmail.com
+ * @file        : reverseInteger.cpp
+ * @created     : Saturday Aug 07, 2021 08:41:05 IST
+ */
 
-Example 1:
-
-Input: 123
-Output: 321
-Example 2:
-
-Input: -123
-Output: -321
-Example 3:
-
-Input: 120
-Output: 21
-Note:
-Assume we are dealing with an environment which could only store integers within
-the 32-bit signed integer range: [−231,  231 − 1]. For the purpose of this
-problem, assume that your function returns 0 when the reversed integer
-overflows.
-
-*/
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public:
   int reverse(int x) {
-    long long num = 0;
-    int a = 0;
-    while (x) {
-      a = x % 10;
-      num = a + num * 10;
-      x = x / 10;
+    long long int num = x;
+    bool neg = false;
+    if (num < -0)
+      neg = true;
+
+    if (neg)
+      num *= -1;
+
+    string s = to_string(num);
+    std::reverse(s.begin(), s.end());
+
+    long long int res = stoll(s);
+
+    if (neg) {
+      res *= -1;
+      if (res < INT_MIN)
+        return 0;
+      else
+        return (int)res;
     }
-    return (num > INT_MAX || num < INT_MIN) ? 0 : num;
+
+    if (res > INT_MAX)
+      return 0;
+    else
+      return (int)res;
   }
 };
