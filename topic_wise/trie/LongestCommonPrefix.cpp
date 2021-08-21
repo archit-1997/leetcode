@@ -1,41 +1,99 @@
-/*Write a function to find the longest common prefix string amongst an array of
-strings.
+/**
+ * @author      : archit
+ * @GitHub      : archit-1997
+ * @Email       : architsingh456@gmail.com
+ * @file        : longestCommonPrefix.cpp
+ * @created     : Saturday Aug 21, 2021 17:08:42 IST
+ */
 
-If there is no common prefix, return an empty string "".
+#include <bits/stdc++.h>
+using namespace std;
 
-Example 1:
+class TrieNode{
+    public:
+        
+        TrieNode(){}
 
-Input: ["flower","flow","flight"]
-Output: "fl"
-Example 2:
+        unordered_map<char,TrieNode*> children;
+        bool eow;
+};
 
-Input: ["dog","racecar","car"]
-Output: ""
-Explanation: There is no common prefix among the input strings.*/
+class Trie{
+public:
+
+    TrieNode* root;
+
+    Trie(){
+        root=new TrieNode();
+        root->eow=false;
+    }
+
+    void insert(string s){
+        TrieNode* cur=root;
+        int n=s.size();
+        for(int i=0;i<n;i++){
+            //we find the character
+            char ch=s[i];
+
+            //if this character is not present : we will create a new node
+            if(cur->children[ch]==NULL)
+                cur->children[ch]=new TrieNode();
+            cur=cur->children[ch];
+        }
+        //we will have to the eow here as true
+        cur->eow=true;
+    }
+
+    string findLCP(){
+        TrieNode* cur=root;
+        string ans="";
+        while(1){
+            //eow=true : map.size()>1
+            if(cur->eow==true || cur->children.size()>1)
+                return ans;
+            auto m=cur->children;
+            auto it=m.begin();
+            char ch=it->first;
+            ans=ans+ch;
+            cur=cur->children[ch];
+        }
+        return ans;
+    }
+};
 
 class Solution {
 public:
-  string longestCommonPrefix(vector<string> &strs) {
-    if (strs.size() == 0)
-      return "";
-    string ans = "";
-    int max = INT_MAX;
-    for (auto &s : strs) {
-      max = (max > s.length()) ? s.length() : max;
-    }
-    for (int i = 0; i < max; i++) {
-      bool flag = true;
-      char x = strs[0][i];
-      for (auto &s : strs) {
-        if (s[i] != x) {
-          flag = false;
-          break;
+
+    string longestCommonPrefix(vector<string>& strs) {
+        Trie t;
+        int n=strs.size();
+        for(int i=0;i<n;i++){
+            string s=strs[i];
+            t.insert(s);
         }
-      }
-      if (flag == false)
+        string ans=t.findLCP();
         return ans;
-      ans += x;
     }
-    return ans;
-  }
 };
+
+
+void init(){
+    freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
+}
+
+int main(){
+    init();
+
+    int n;cin>>n;
+
+    vector<string> v(n);
+
+    for(int i=0;i<n;i++)
+        cin>>v[i];
+
+    Solution s;
+    string ans=s.longestCommonPrefix(v);
+    cout<<ans;
+
+}
