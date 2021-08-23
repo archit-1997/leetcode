@@ -11,11 +11,15 @@ using namespace std;
 
 class TrieNode{
     public:
-        
-        TrieNode(){}
-
+    
         unordered_map<char,TrieNode*> children;
         bool eow;
+        
+        TrieNode(){
+            eow=false;
+        }
+
+        
 };
 
 class Trie{
@@ -25,7 +29,6 @@ public:
 
     Trie(){
         root=new TrieNode();
-        root->eow=false;
     }
 
     void insert(string s){
@@ -49,9 +52,11 @@ public:
         string ans="";
         while(1){
             //eow=true : map.size()>1
-            if(cur->eow==true || cur->children.size()>1)
-                return ans;
             auto m=cur->children;
+            int s=m.size();
+            if(cur->eow || s>1)
+                return ans;
+          
             auto it=m.begin();
             char ch=it->first;
             ans=ans+ch;
@@ -76,24 +81,3 @@ public:
     }
 };
 
-
-void init(){
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-}
-
-int main(){
-    init();
-
-    int n;cin>>n;
-
-    vector<string> v(n);
-
-    for(int i=0;i<n;i++)
-        cin>>v[i];
-
-    Solution s;
-    string ans=s.longestCommonPrefix(v);
-    cout<<ans;
-
-}
