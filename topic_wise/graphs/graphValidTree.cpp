@@ -1,54 +1,87 @@
 /**
- * @author      : archit 
+ * @author      : archit
  * @GitHub      : archit-1997
- * @email       : architsingh456@gmail.com
+ * @Email       : architsingh456@gmail.com
  * @file        : graphValidTree.cpp
- * @created     : Thursday Jul 29, 2021 12:30:46 IST
+ * @created     : Sunday Aug 22, 2021 15:25:14 IST
  */
-
 
 #include <bits/stdc++.h>
 using namespace std;
 
 class Solution {
 public:
-    /**
-     * @param n: An integer
-     * @param edges: a list of undirected edges
-     * @return: true if it's a valid tree, or false
-     */
-    
-    bool dfs(vector<vector<int>> &graph,vector<int> &vis,vector<int> &rec,int x){
-        vis[x]=1;
-        rec[x]=1;
-        for(int i=0;i<graph[x].size();i++){
-            int curr=graph[x][i];
-            if(vis[curr] || rec[curr])
-                return false;
-            if(!dfs(graph,vis,rec,curr))
-                return false;
+
+    int findParent(int x,vector<int> &par){
+        while(par[x]!=x){
+            par[x]=par[par[x]];
+            x=par[x];
         }
-        rec[x]=0;
+        return x;
+    }
+
+    bool checkCycle(vector<vector<int>> &edges,int n){
+        vector<int> par(n);
+        for(int i=0;i<n;i++)
+            par[i]=i;
+        int len=edges.size();
+        for(int i=0;i<len;i++){
+            int a=edges[i][0],b=edges[i][1];
+
+            //we need to make parent of a as parent of b
+            int pa=findParent(a,par);
+            int pb=findParent(b,par);
+
+            if(pa==pb)
+                return false;
+
+            //we join them if they have different parents
+            par[pa]=pb;
+        }
+
         return true;
     }
 
-    bool validTree(int n, vector<vector<int>> &edges) {
-        // write your code here
+    vector<vector<int>> buildGraph(vector<vector<int>> &edges,int n){
         vector<vector<int>> graph(n);
-        for(vector<int> edge : edges)
-            graph[edge[0]].push_back(edge[1]);
+        for(int i=0;i<edges.size();i++){
+            int a=edges[i][0],b=edges[i][1];
+            graph[a].push_back(b);
+            graph[b].push_back(a);
+        }
+        return graph;
+    }
+
+    void dfs(vector<vector<int>> &graph,vector<int> &vis,int x){
+        vis[x]=1;
+        for(int i=0;i<graph[x].size();i++){
+            int cur=graph[x][i];
+            if(!vis[cur])
+                dfs(graph,vis,cur);
+        }
+    }
+
+    int components(vector<vector<int>> &edges,int n){
+        vector<vector<int>> graph=buildGraph(edges,n);
 
         vector<int> vis(n,0);
-
+        int ans=0;
         for(int i=0;i<n;i++){
-            //do dfs from every node
-            if(graph[i].size()>0 && !vis[i]){
-                vector<int> rec(n,0);
-                if(!dfs(graph,vis,rec,i))
-                    return false;
+            if(!vis[i]){
+                dfs(graph,vis,i);
+                ans++;
             }
         }
-        return true;
+        return ans;
+    }
 
+
+    bool validTree(int n, vector<vector<int>>& edges) {
+        //we need to check for cycle and the number of connected components
+        bool res=checkCycle(edges,n);
+        int comp=components(edges,n);
+
+        return (res && comp==1);
+        
     }
 };
